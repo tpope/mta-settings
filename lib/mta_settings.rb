@@ -152,13 +152,13 @@ module MtaSettings
       class_attribute(accessor) unless respond_to?(accessor)
       send(:"#{accessor}=", settings)
       if settings[:from]
-        default from: settings[:from]
+        default :from => settings[:from]
       elsif !default.has_key?(:from) &&
           ![nil, LOCALHOST].include?(settings[:domain])
-        default from: "noreply@#{settings[:domain]}"
+        default :from => "noreply@#{settings[:domain]}"
       elsif !default.has_key?(:from) &&
           settings[:user_name] =~ /\A\S+@\S+\.\w+\z/
-        default from: settings[:user_name]
+        default :from => settings[:user_name]
       end
     end
   end
