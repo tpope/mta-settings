@@ -111,4 +111,20 @@ class MtaSettingsTest < Minitest::Test
     assert_equal 'bar',                   settings[:password]
     assert_equal 'localhost.localdomain', settings[:domain]
   end
+
+  def test_mailtrap
+    base = {
+      'MAILTRAP_API_TOKEN' => 'supertoken',
+    }
+    Net::HTTP.stub(:get, "[{\"id\":1,\"company_id\":1,\"name\":\"Demo inbox\",\"username\":\"super_username\",\"password\":\"super_password\",\"max_size\":50,\"status\":\"active\",\"email_username\":\"email_username\",\"email_username_enabled\":false,\"domain\":\"smtp.mailtrap.io\",\"email_domain\":\"inbox.mailtrap.io\",\"emails_count\":0,\"emails_unread_count\":0,\"last_message_sent_at_timestamp\":null,\"smtp_ports\":[25,465,2525],\"pop3_ports\":[1100,9950],\"has_inbox_address\":false}]" ) do
+      adapter, settings = settings(base)
+      assert_equal :smtp, adapter
+      assert_equal 'smtp.mailtrap.io', settings[:address]
+      assert_equal 25,                 settings[:port]
+      assert_equal :plain,             settings[:authentication]
+      assert_equal 'super_username',   settings[:user_name]
+      assert_equal 'super_password',   settings[:password]
+      assert_equal 'smtp.mailtrap.io', settings[:domain]
+    end
+  end
 end
