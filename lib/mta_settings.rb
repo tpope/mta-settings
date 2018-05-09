@@ -1,5 +1,7 @@
 require 'uri'
 require 'cgi'
+require 'net/http'
+require 'json'
 require 'active_support/core_ext/object/blank'
 require 'active_support/lazy_load_hooks'
 
@@ -106,6 +108,17 @@ module MtaSettings
         :user_name            => env['MAILGUN_SMTP_LOGIN'],
         :password             => env['MAILGUN_SMTP_PASSWORD'],
         :domain               => domain,
+      }]
+    elsif env['MAILTRAP_API_TOKEN'].present?
+      response = Net::HTTP.get(URI.parse("https://mailtrap.io/api/v1/inboxes.json?api_token=#{env['MAILTRAP_API_TOKEN']}"))
+      first_inbox = JSON.parse(response)[0]
+      [:smtp, {
+        :address              => first_inbox['domain'],
+        :port                 => first_inbox['smtp_ports'][0],
+        :authentication       => :plain,
+        :user_name            => first_inbox['username'],
+        :password             => first_inbox['password'],
+        :domain               => first_inbox['domain']
       }]
     end
   end
