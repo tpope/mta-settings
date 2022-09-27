@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "mta-settings"
-  spec.version       = "1.1.1"
+  spec.version       = "1.1.2"
   spec.authors       = ["Tim Pope"]
   spec.email         = ["code\x41tp" + 'ope.net']
   spec.summary       = %q{Configure ActionMailer or Mail delivery settings based on the environment}
