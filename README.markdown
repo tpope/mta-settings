@@ -40,7 +40,8 @@ variables, in order of decreasing precedence:
 * `MANDRILL_APIKEY`: Mandrill
 * `POSTMARK_API_TOKEN`: Postmark
 * `MAILGUN_SMTP_LOGIN`: Mailgun
-* `MAILTRAP_API_TOKEN`: Mailtrap (for development)
+* `MAILTRAP_API_TOKEN`: Mailtrap (for development).
+  Also set `MAILTRAP_INBOX_ID` when using an account with multiple inboxes.
 
 If no supported environment variable is found, the configuration is left
 blank.  This enables easy defaulting:
