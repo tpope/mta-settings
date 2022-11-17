@@ -114,11 +114,14 @@ module MtaSettings
       first_inbox = JSON.parse(response)[0]
       [:smtp, {
         :address              => first_inbox['domain'],
-        :port                 => first_inbox['smtp_ports'][0],
-        :authentication       => :plain,
+        :port                 => 2525,
+        :authentication       => :cram_md5,
         :user_name            => first_inbox['username'],
         :password             => first_inbox['password'],
-        :domain               => first_inbox['domain']
+        :domain               => first_inbox['domain'],
+        :enable_starttls_auto => true,
+        :open_timeout         => 30,
+        :read_timeout         => 30
       }]
     end
   end
