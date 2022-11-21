@@ -111,14 +111,15 @@ module MtaSettings
       }]
     elsif env['MAILTRAP_API_TOKEN'].present?
       response = Net::HTTP.get(URI.parse("https://mailtrap.io/api/v1/inboxes.json?api_token=#{env['MAILTRAP_API_TOKEN']}"))
-      first_inbox = JSON.parse(response)[0]
+      inboxes = JSON.parse(response)
+      inbox = inboxes.detect { |i| i['id'] == env['MAILTRAP_INBOX_ID'].to_i } || inboxes.first
       [:smtp, {
-        :address              => first_inbox['domain'],
-        :port                 => first_inbox['smtp_ports'][0],
+        :address              => inbox['domain'],
+        :port                 => inbox['smtp_ports'].first,
         :authentication       => :plain,
-        :user_name            => first_inbox['username'],
-        :password             => first_inbox['password'],
-        :domain               => first_inbox['domain']
+        :user_name            => inbox['username'],
+        :password             => inbox['password'],
+        :domain               => inbox['domain'],
       }]
     end
   end
