@@ -114,12 +114,12 @@ module MtaSettings
       inboxes = JSON.parse(response)
       inbox = inboxes.detect { |i| i['id'] == env['MAILTRAP_INBOX_ID'].to_i } || inboxes.first
       [:smtp, {
-        :address              => first_inbox['domain'],
-        :port                 => first_inbox['smtp_ports'].last,
+        :address              => inbox['domain'],
+        :port                 => inbox['smtp_ports'].last,
         :authentication       => :cram_md5,
-        :user_name            => first_inbox['username'],
-        :password             => first_inbox['password'],
-        :domain               => first_inbox['domain'],
+        :user_name            => inbox['username'],
+        :password             => inbox['password'],
+        :domain               => inbox['domain'],
         :enable_starttls_auto => true,
         :open_timeout         => 30,
         :read_timeout         => 30
