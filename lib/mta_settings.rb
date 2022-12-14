@@ -115,11 +115,12 @@ module MtaSettings
       inbox = inboxes.detect { |i| i['id'] == env['MAILTRAP_INBOX_ID'].to_i } || inboxes.first
       [:smtp, {
         :address              => inbox['domain'],
-        :port                 => inbox['smtp_ports'].first,
-        :authentication       => :plain,
+        :port                 => inbox['smtp_ports'].last,
+        :authentication       => :cram_md5,
         :user_name            => inbox['username'],
         :password             => inbox['password'],
         :domain               => inbox['domain'],
+        :enable_starttls_auto => true
       }]
     end
   end
