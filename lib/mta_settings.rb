@@ -120,9 +120,7 @@ module MtaSettings
         :user_name            => inbox['username'],
         :password             => inbox['password'],
         :domain               => inbox['domain'],
-        :enable_starttls_auto => true,
-        :open_timeout         => 30,
-        :read_timeout         => 30
+        :enable_starttls_auto => true
       }]
     end
   end
